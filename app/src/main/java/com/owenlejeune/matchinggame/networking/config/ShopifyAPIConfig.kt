@@ -1,9 +1,9 @@
-package com.owenlejeune.matchinggame.networking
+package com.owenlejeune.matchinggame.networking.config
 
 class ShopifyAPIConfig: IAPIConfig {
 
     override fun baseURL(): String = "https://shopicruit.myshopify.com"
 
-    override fun accessToken(): String? = "c32313df0d0ef512ca64d5b336a0d7c6"
+    override fun accessToken(): String = "c32313df0d0ef512ca64d5b336a0d7c6"
 
 }
