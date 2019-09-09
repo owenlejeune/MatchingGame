@@ -3,4 +3,5 @@
     <string name="action_new_game">New Game</string>
     <string name="title_winner">Winner!</string>
     <string name="message_winner">You Win! Play again?</string>
+    <string name="score_text">Matches: %d</string>
 </resources>

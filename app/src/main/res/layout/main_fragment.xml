@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.nex3z.flowlayout.FlowLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:flChildSpacing="auto"
-    app:flChildSpacingForLastRow="auto"
-    app:flRowSpacing="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/score_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:padding="8dp"/>
 
-</com.nex3z.flowlayout.FlowLayout>
+    <com.nex3z.flowlayout.FlowLayout
+        android:id="@+id/card_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:flChildSpacing="auto"
+        app:flChildSpacingForLastRow="auto"
+        app:flRowSpacing="8dp" />
+
+</LinearLayout>

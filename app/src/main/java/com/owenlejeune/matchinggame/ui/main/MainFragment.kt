@@ -3,6 +3,7 @@ package com.owenlejeune.matchinggame.ui.main
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,12 +25,14 @@ class MainFragment : Fragment(), ProductMatchesManager.AllMatchesFoundListener {
     private val matchesManager: ProductMatchesManager by inject()
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var mainContainer: FlowLayout
+    private lateinit var cardContainer: FlowLayout
+    private lateinit var scoreTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
 
-        mainContainer = view.findViewById(R.id.main_container)
+        cardContainer = view.findViewById(R.id.card_container)
+        scoreTextView = view.findViewById(R.id.score_text)
 
         setHasOptionsMenu(true)
 
@@ -46,13 +49,16 @@ class MainFragment : Fragment(), ProductMatchesManager.AllMatchesFoundListener {
         })
 
         matchesManager.setMatchesFoundListener(this)
+        matchesManager.numMatches.observe(this@MainFragment, Observer { score ->
+            scoreTextView.text = resources.getString(R.string.score_text, score)
+        })
     }
 
     private fun fillBoard(products: List<Product>) {
-        mainContainer.removeAllViews()
+        cardContainer.removeAllViews()
         AsyncTask.THREAD_POOL_EXECUTOR.execute {
-            val numRows = mainContainer.height / (ProductCard.HEIGHT_PX + mainContainer.rowSpacing).toInt()
-            val numCols = mainContainer.width / ProductCard.WIDTH_PX
+            val numRows = cardContainer.height / (ProductCard.HEIGHT_PX + cardContainer.rowSpacing).toInt()
+            val numCols = cardContainer.width / ProductCard.WIDTH_PX
             val numCards = (numCols * numRows) / 2
 
             val duplicatedProducts = ArrayList<Product>()
@@ -67,14 +73,14 @@ class MainFragment : Fragment(), ProductMatchesManager.AllMatchesFoundListener {
                 activity!!.runOnUiThread {
                     val card = ProductCard(requireContext())
                     card.bindProductToView(it)
-                    mainContainer.addView(card)
+                    cardContainer.addView(card)
                     matchesManager.registerCard(this@MainFragment, card)
                 }
             }
 
             Thread.sleep(3000)
             activity!!.runOnUiThread {
-                mainContainer.children.forEach {
+                cardContainer.children.forEach {
                     if (it is ProductCard) it.flip()
                 }
             }
@@ -106,6 +112,7 @@ class MainFragment : Fragment(), ProductMatchesManager.AllMatchesFoundListener {
     }
 
     private fun newGame() {
+        matchesManager.reset()
         viewModel.productLiveData.value?.let { fillBoard(it) }
     }
 
