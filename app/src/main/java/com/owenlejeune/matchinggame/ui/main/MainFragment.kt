@@ -83,9 +83,10 @@ class MainFragment : Fragment(), ProductMatchesManager.AllMatchesFoundListener {
 
     override fun onAllMatchesFound() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Winner!")
-            .setMessage("You Win!")
-            .setPositiveButton("Ok", null)
+            .setTitle(R.string.title_winner)
+            .setMessage(R.string.message_winner)
+            .setPositiveButton(android.R.string.yes) { _, _ -> newGame()}
+            .setNegativeButton(android.R.string.no, null)
             .show()
     }
 

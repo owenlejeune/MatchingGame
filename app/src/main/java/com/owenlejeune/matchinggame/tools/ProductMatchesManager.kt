@@ -7,7 +7,7 @@ import com.owenlejeune.matchinggame.ui.component.ProductCard
 
 class ProductMatchesManager {
 
-    private val WINNING_MATCHES = 1//0
+    private val WINNING_MATCHES = 10
     private val NEEDED_FOR_MATCH = 2
 
     private val visibleCards = ArrayList<ProductCard>(NEEDED_FOR_MATCH)
