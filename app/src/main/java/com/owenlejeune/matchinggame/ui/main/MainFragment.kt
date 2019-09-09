@@ -2,9 +2,7 @@ package com.owenlejeune.matchinggame.ui.main
 
 import android.os.AsyncTask
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,6 +30,8 @@ class MainFragment : Fragment(), ProductMatchesManager.AllMatchesFoundListener {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
 
         mainContainer = view.findViewById(R.id.main_container)
+
+        setHasOptionsMenu(true)
 
         return view
     }
@@ -87,6 +87,25 @@ class MainFragment : Fragment(), ProductMatchesManager.AllMatchesFoundListener {
             .setMessage("You Win!")
             .setPositiveButton("Ok", null)
             .show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_new_game -> {
+                newGame()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun newGame() {
+        viewModel.productLiveData.value?.let { fillBoard(it) }
     }
 
 }
